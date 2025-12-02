@@ -17,7 +17,7 @@ Gym_Data = [
     
     # Olympic Gyms
     {"name": "Olympic Lifting Academy", "type": "olympic", "location": "Columbus, OH - Campus Area", "rating": 4.8, "price": 85},
-    {"name": "Weightlifting Elite", "type": "olympic", "location": "Columbus, OH - Grandview", "rating": 4.6, "price": 80},
+    #{"name": "Weightlifting Elite", "type": "olympic", "location": "Columbus, OH - Grandview", "rating": 4.6, "price": 80},
     
     # Martial Arts Gyms
     {"name": "Columbus Combat Academy", "type": "martial arts", "location": "Columbus, OH - Downtown", "rating": 4.7, "price": 120},

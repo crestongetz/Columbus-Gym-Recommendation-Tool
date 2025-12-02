@@ -3,6 +3,7 @@ from gymData import *
 def print_line():
     print("-" * 100)
 
+
 # Welcome message function
 def welcome():
     print_line()
@@ -11,44 +12,106 @@ def welcome():
     print("Let's get started!\n")
     print_line()
 
-#get user input and ensure it is a valid input
-def get_user_input():
+
+# Gets the users input using a given prompt and ensures it is a valid input
+# This function hanldes letter input to ensure its valid and a single letter for searching gym types
+def get_user_input_letter(prompt):
+
+    #ensure prompt is a string, not empty, and not None
+    if not isinstance(prompt, str):
+        raise ValueError("Prompt must be a string")
+    if not prompt.strip():
+        raise ValueError("Prompt cannot be empty")
+    if prompt is None:
+        raise ValueError("Prompt cannot be None")
+
     while True:
-        print("Enter 'q' to quit the program.")
-        user_input = input("What type of gym are you looking for?\nType the beginning letter of that type and press enter to see if it's in Columbus!: ").lower()
+        print_line()
+        print("\nEnter 'q' to quit the program.")
+        user_input = input(prompt).strip().lower()
         if user_input == 'q':
             return 'q'
         #if the input is a letter
-        if user_input.isalpha():
+        if user_input.isalpha() and len(user_input) == 1:
             return user_input
         else:
-            print("Invalid input. Please try again.")
+            print("Invalid input. Please enter a single letter")
+
+
+# Getsthe users input using a given string prompt and ensures it is a valid input
+# This function hanldes string input to ensure its valid and inside the types of gyms
+def get_user_input_string(prompt):
+    #ensure prompt is a string, not empty, and not None
+    if not isinstance(prompt, str):
+        raise ValueError("Prompt must be a string")
+    if not prompt.strip():
+        raise ValueError("Prompt cannot be empty")
+    if prompt is None:
+        raise ValueError("Prompt cannot be None")
+
+    while True:
+        print_line()
+        print("\nEnter 'q' to quit the program.")
+        user_input = input(prompt).strip().lower()
+        if user_input == 'q':
+            return 'q'
+        if user_input in types:
+            return user_input
+        else:
+            print("Invalid input. Please enter a valid type of gym")
+
+# This function will search the gym data for gyms that match the user input string
+def search_gyms(user_input_string, Gym_Data=Gym_Data):
+    print_line()
+    print(f"\nHere are all the {user_input_string.title()} gyms in Columbus, OH:")
+    for gym in Gym_Data:
+        if user_input_string in gym['type']:
+            print(f"""
+                Name: {gym['name'].title()}
+                Type: {gym['type'].title()}
+                Location: {gym['location'].title()}
+                Rating: {gym['rating']}
+                Price: ${gym['price']} per month.
+            """)
 
 
 # User interaction function
 def user_interaction():
     while True:
         #get user input for gym type
-        user_input = get_user_input()
+        user_input_letter = get_user_input_letter("What type of gym are you looking for?\nType the beginning letter of that type and press enter to see if it's in Columbus!: ")
         print()
-
-        if user_input == 'q':
+        if user_input_letter == 'q':
             break
 
         #store a list of gym types that match the user input
-        type_matches = [type for type in types if type.startswith(user_input)]
+        type_matches = [type for type in types if type.startswith(user_input_letter)]
 
-        #if there are many matches print the full list
+        #if there are no matches print a message and ask the user to enter a different letter
+        if len(type_matches) == 0:
+            print("No gyms found that match your input. ")
+            print(f"Heres the full list of gym types: {types}\n")
+            continue
+
+
+        #if there are many matches print the full list and ask the user which one they want to see
         if len(type_matches) > 1:
-            print(f"The following types of gyms match your input: {type_matches}")
+            print(f"The following types of gyms match your input: {type_matches}\n")
+            user_input_string = get_user_input_string("Which type of gym would you like to see? (enter the full type): ")
+            #if the string the user enters is like or similar to any of the types of gyms in the data print the gyms that match the string
+            search_gyms(user_input_string)
+
+
         #if there is only one match print the match
         elif len(type_matches) == 1:
             print(f"The following type of gym matches your input: {type_matches[0]}")
-            print("Would you like to see the gyms that match this type? (y/n)")
-        #if there are no matches print a message
-        else:
-            print("No gyms found that match your input. ")
-            print(f"Heres the full list of gym types: {types}")
+            user_input = get_user_input_letter(f"Would you like to see the {type_matches[0].title()} gyms in Columbus, OH? (y/n): ")
+            print()
+            if user_input == 'y':
+                search_gyms(type_matches[0])
+            elif user_input == 'n':
+                continue
+
 
 
 #main function
