@@ -60,20 +60,33 @@ def get_user_input_string(prompt):
         else:
             print("Invalid input. Please enter a valid type of gym")
 
+
+def print_gym_info(gym):
+    print(f"""
+    Name: {gym['name'].title() if gym['name'] else 'N/A'}
+    Type: {gym['type'].title() if gym['type'] else 'N/A'}
+    Location: {gym['location'].title() if gym['location'] else 'N/A'}
+    Rating: {gym['rating'] if gym['rating'] else 'N/A'}
+    Price: ${gym['price'] if gym['price'] else 'N/A'} per month.
+    """)
+
+
 # This function will search the gym data for gyms that match the user input string
 def search_gyms(user_input_string, Gym_Data=Gym_Data):
+
+    user_input_string = user_input_string.lower()
     print_line()
     print(f"\nHere are all the {user_input_string.title()} gyms in Columbus, OH:")
-    for gym in Gym_Data:
-        if user_input_string in gym['type']:
-            print(f"""
-                Name: {gym['name'].title()}
-                Type: {gym['type'].title()}
-                Location: {gym['location'].title()}
-                Rating: {gym['rating']}
-                Price: ${gym['price']} per month.
-            """)
 
+    found = False
+    for gym in Gym_Data:
+        if user_input_string in gym['type'].lower():
+            print_gym_info(gym)
+            found = True
+
+    if not found:
+        print("No gyms found that match your input.")
+        print(f"Heres the full list of gym types: {types}\n")
 
 # User interaction function
 def user_interaction():
@@ -85,13 +98,20 @@ def user_interaction():
             break
 
         #store a list of gym types that match the user input
-        type_matches = [type for type in types if type.startswith(user_input_letter)]
+        type_matches = [gym_type for gym_type in types if gym_type.startswith(user_input_letter)]
 
         #if there are no matches print a message and ask the user to enter a different letter
         if len(type_matches) == 0:
-            print("No gyms found that match your input. ")
-            print(f"Heres the full list of gym types: {types}\n")
-            continue
+            print("No gyms found that match your input.")
+            user_input_letter = get_user_input_letter("Would you like to see the full list of gym types? (y/n): ")
+            if user_input_letter == 'y':
+                print(f"Heres the full list of gym types: {types}\n")
+            elif user_input_letter == 'n':
+                continue
+            else:
+                print("Invalid input. Please enter a valid input.")
+                continue
+
 
 
         #if there are many matches print the full list and ask the user which one they want to see
@@ -111,6 +131,8 @@ def user_interaction():
                 search_gyms(type_matches[0])
             elif user_input == 'n':
                 continue
+        else:
+            continue
 
 
 
