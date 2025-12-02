@@ -1,6 +1,9 @@
 #Here we are storing a list of gyms types
 types = ["powerlifting", "crossfit", "bodybuilding", "olympic", "martial arts", "yoga", "pilates", "traditional", "strongman", "budget"]
 
+#TODO add api from google maps to get gym data
+# Try gemini or ai api to sort gyms into types if not available in the data
+
 #Fake Gym Data that has name, type, location, rating, and price
 Gym_Data = [
     # Powerlifting Gyms

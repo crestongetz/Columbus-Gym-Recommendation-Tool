@@ -72,6 +72,8 @@ def print_gym_info(gym):
 
 
 # This function will search the gym data for gyms that match the user input string
+# This function uses linear search which is fine considering we are only searching for columbus gyms. If we had more data a hash map or binary search would be better suited.
+#   In a real world application a ranking algorithm would also be useful. 
 def search_gyms(user_input_string, Gym_Data=Gym_Data):
 
     user_input_string = user_input_string.lower()
