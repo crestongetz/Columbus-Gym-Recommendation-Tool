@@ -5,7 +5,7 @@ This is a simple `Python tool` that `helps users find gyms in Columbus, Ohio`, b
 The user enters the first letter of a gym type, selects a matching type, and the program displays all gyms that match.
 
 ## Future Improvements
-1. Right now, `this tool is simple and something I plan to build on`. Linear search works fine because there are not many gyms in Columbus (a few dozen). However, if the tool were scaled to the entire United States or globally, using a faster search method, such as a `hash `map, binary search, or a proper search engine, would be more effective.
+1. Right now, `this tool is simple and something I plan to build on`. Linear search works fine because there are not many gyms in Columbus (a few dozen). However, if the tool were scaled to the entire United States or globally, using a faster search method, such as a hash map, binary search, or a proper search engine, would be more effective.
 
 2. The program currently uses fake gym data. In the future, I plan to implement an `API (similar to the Google Maps API)` to retrieve actual gym data and potentially `utilize AI` or another tool to automatically categorize gyms by type.
 
